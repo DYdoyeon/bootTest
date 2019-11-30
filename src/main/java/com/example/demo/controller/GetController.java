@@ -23,6 +23,7 @@ public class GetController {
 
 	}
 
+	@GetMapping("/getMultiParameter")
 	public SearchParam getMultiParameter(SearchParam searchParam) {
 		return searchParam;
 	}

@@ -13,6 +13,6 @@ import com.example.demo.model.SearchParam;
 
 	@PostMapping("/postMethod")
 	public String postMethod(@RequestBody SearchParam searchParam) {
-		return "OK";
+		return "OK"; 
 	}
 }

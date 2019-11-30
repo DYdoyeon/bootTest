@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan
-@EnableAutoConfiguration(exclude= {DataSourceAutoConfiguration.class})
+//@EnableAutoConfiguration(exclude= {DataSourceAutoConfiguration.class})
 public class BootjarTestApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
