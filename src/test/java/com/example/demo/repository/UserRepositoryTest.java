@@ -20,27 +20,41 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 	// @Test
 	public void create() {
 		// String sql = insert into user (%s, %s, %d) value (account,email,age);
+		String account = "Test01";
+		String password = "Test01";
+
+		String status = "REGISTERED";
+		String email = "Test01@naver.com";
+		String phoneNumber = "010-1111-1111";
+		LocalDateTime registedAt = LocalDateTime.now();
+		LocalDateTime createdAt = LocalDateTime.now();
+
+		String createdBy = "AdminServer";
+
 		User user = new User();
-		user.setAccount("TestUser03");
-		user.setEmail("testuser03@gmail.com");
-		user.setPhoneNumber("010-2202-3333");
-		user.setCreatedAt(LocalDateTime.now());
-		user.setCreatedBy("Testuser03");
+
+		user.setAccount(account);
+		user.setPassword(password);
+		user.setStatus(status);
+		user.setEmail(email);
+		user.setPhoneNumber(phoneNumber);
+		user.setCreatedAt(createdAt);
+		user.setCreatedBy(createdBy);
+		user.setRegisteredAt(registedAt);
 
 		User newUser = userRepository.save(user);
+		Assert.assertNotNull(newUser);
 		System.out.println("newUser : " + newUser);
 	}
 
-	 //@Test
+	@Test
+	@Transactional
 	public void read() {
 //	public User read(@RequestParam Long id) {
-		Optional<User> user = userRepository.findById(2L);
-		user.ifPresent(selectUser -> {
-			System.out.println("user : " + selectUser);
-		});
 
-		// return user.get();
+		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
 
+		Assert.assertNotNull(user);
 	}
 
 	// @Test
@@ -57,7 +71,7 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 	}
 
 //	@DeleteMapping("/api/usr")
-	//@Test
+	// @Test
 	@Transactional
 	public void delete() {
 		Optional<User> user = userRepository.findById(5L);

@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -13,6 +14,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.*;
 import com.example.demo.model.entity.*;
 
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.junit.Assert;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.demo.*;
+import com.example.demo.model.entity.Item;
+import com.example.demo.model.entity.User;
+
 public class OrderDetailRepositoryTest extends BootjarTestApplicationTests {
 
 	@Autowired
@@ -21,12 +36,18 @@ public class OrderDetailRepositoryTest extends BootjarTestApplicationTests {
 	@Test
 	public void create() {
 		OrderDetail orderDetail = new OrderDetail();
-		orderDetail.setOrderAt(LocalDateTime.now());
 
-		orderDetail.setUserId(7L);
-
+		orderDetail.setStatus("WAITING");
+		orderDetail.setArrivalDate(LocalDateTime.now().plusDays(2));
+		orderDetail.setQuantity(1);
+		orderDetail.setTotalPrice(BigDecimal.valueOf(900000));
+		orderDetail.setOrderGroupId(1L);
 		orderDetail.setItemId(1L);
+		orderDetail.setCreatedAt(LocalDateTime.now());
+		orderDetail.setCreatedBy("AdminServer");
+
 		OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
-		Assert.assertNotNull(orderDetail);
+		Assert.assertNotNull(newOrderDetail);
 	}
+
 }

@@ -19,27 +19,32 @@ public class ItemRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private ItemRepository itemRepository;
 
-	//@Test
+	@Test
 	public void create() {
 		Item item = new Item();
 
-		item.setName("노트");
-		item.setPrice(100000);
-		item.setContent("삼성노트");
-
+		item.setName("UNREGISTERED");
+		item.setPrice(9000000);
+		item.setTitle("삼성노트북 A100");
+		item.setContent("2019년형 노트입니다.");
+		item.setName("삼성 노트북");
+		item.setBrandName("samsung");
+		item.setRegisteredAt(LocalDateTime.now());
+		item.setCreatedAt(LocalDateTime.now());
+		item.setCreatedBy("Partner01");
+		item.setPartnerId(1L);
 		Item newItem = itemRepository.save(item);
 		Assert.assertNotNull(newItem);
 	}
-
-	@Test
+ 
+	// @Test
 	public void read() {
 		Long id = 1L;
-	
+
 		Optional<Item> item = itemRepository.findById(id);
 		Assert.assertTrue(item.isPresent());
 		/*
-		item.ifPresent(i->{
-			System.out.println(i);
-		});*/
+		 * item.ifPresent(i->{ System.out.println(i); });
+		 */
 	}
 }

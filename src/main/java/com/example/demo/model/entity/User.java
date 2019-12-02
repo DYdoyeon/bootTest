@@ -23,22 +23,27 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String account;
+	private String status;
+	private String password;
+	private LocalDateTime registeredAt;
 
-	@Column(name="phone_number")
+	private LocalDateTime unregisteredAt;
+
+	@Column(name = "phone_number")
 	private String phoneNumber;
 
-	@Column(name="created_at")
+	@Column(name = "created_at")
 	private LocalDateTime createdAt;
-	
+
 	private String email;
 
-	@Column(name="created_by")
+	@Column(name = "created_by")
 	private String createdBy;
 
-	@Column(name="updated_at")
+	@Column(name = "updated_at")
 	private LocalDateTime updateAt;
 
-	@Column(name="updated_by")
+	@Column(name = "updated_by")
 	private String updateBy;
 
 }

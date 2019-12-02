@@ -15,22 +15,25 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity // order_detail
-public class OrderDetail {
+@Entity
+public class AdminUser {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	//private LocalDateTime arrivedDate;
-	private int quantity;
-	private BigDecimal totalPrice;
-	private Long orderGroupId;
-	private Long itemId;
-	
 	private String status;
+	private String password;
+	private int login_fail_count;
+
+	private String account;
+	private String role;
+	private LocalDateTime lastLoginAt;
+	private LocalDateTime passwordUpdateAt;
+	private LocalDateTime registerAt;
+	private LocalDateTime unregisterAt;
+	
 	private LocalDateTime createdAt;
 	private String createdBy;
 	private LocalDateTime updatedAt;
 	private String updatedBy;
-	private LocalDateTime arrivalDate;
-
 }
