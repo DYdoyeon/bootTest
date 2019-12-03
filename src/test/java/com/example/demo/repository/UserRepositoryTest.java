@@ -50,11 +50,18 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 	@Test
 	@Transactional
 	public void read() {
-//	public User read(@RequestParam Long id) {
 
 		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
+		if (user != null) {
+			user.getOrderGroupList().stream().forEach(orderGroup -> {
+				System.out.println("수령인 : " + orderGroup.getRevName());
+				System.out.println("총금액 : " + orderGroup.getTotalPrice());
+				System.out.println("수령지 : " + orderGroup.getRevAddress());
+				System.out.println("총수량 : " + orderGroup.getTotalQuantity());
+			});
+		//	Assert.assertNotNull(user);
 
-		Assert.assertNotNull(user);
+		}
 	}
 
 	// @Test
@@ -72,7 +79,7 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 
 //	@DeleteMapping("/api/usr")
 	// @Test
-	@Transactional
+//	@Transactional
 	public void delete() {
 		Optional<User> user = userRepository.findById(5L);
 		Assert.assertTrue(user.isPresent());

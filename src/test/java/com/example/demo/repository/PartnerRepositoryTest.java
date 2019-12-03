@@ -18,7 +18,7 @@ public class PartnerRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private PartnerRepository partnerRepository;
 
-	@Test
+//	@Test
 	public void create() {
 		String name = "Partner01";
 		String status = "REGISTERED";

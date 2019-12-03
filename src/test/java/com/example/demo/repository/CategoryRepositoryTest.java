@@ -4,12 +4,10 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.Assert;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.BootjarTestApplicationTests;
 import com.example.demo.model.entity.Category;
-import com.example.demo.model.entity.Item;
 
 public class CategoryRepositoryTest extends BootjarTestApplicationTests {
 
@@ -36,7 +34,7 @@ public class CategoryRepositoryTest extends BootjarTestApplicationTests {
 
 	}
 
-	//@Test
+	// @Test
 	public void read() {
 		// select * from category where id=?
 		String type = "COMPUTER";

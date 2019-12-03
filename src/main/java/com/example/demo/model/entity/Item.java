@@ -37,7 +37,7 @@ public class Item {
 	private LocalDateTime unregisteredAt;
 
 	// EAGER = 1:1 / OneToMany : 1:N
-	// LAZY = SELECT * From item where id= ?
-	// @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
-	// private List<OrderDetail> orderDetailList;
+	 //LAZY = SELECT * From item where id= ?
+//	 @OneToMany(fetch = FetchType.LAZY, mappedBy = "item")
+//	 private List<OrderDetail> orderDetailList;
 }

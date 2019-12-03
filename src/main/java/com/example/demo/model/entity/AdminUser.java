@@ -17,21 +17,21 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class AdminUser {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String status;
 	private String password;
-	private int login_fail_count;
+	private int loginFailCount;
 
 	private String account;
 	private String role;
 	private LocalDateTime lastLoginAt;
-	private LocalDateTime passwordUpdateAt;
-	private LocalDateTime registerAt;
-	private LocalDateTime unregisterAt;
-	
+	private LocalDateTime passwordUpdatedAt;
+	private LocalDateTime registeredAt;
+	private LocalDateTime unregisteredAt;
+
 	private LocalDateTime createdAt;
 	private String createdBy;
 	private LocalDateTime updatedAt;
