@@ -7,9 +7,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.*;
+import com.example.demo.BootjarTestApplicationTests;
+import com.example.demo.model.entity.Item;
 import com.example.demo.model.entity.User;
 
 public class UserRepositoryTest extends BootjarTestApplicationTests {
@@ -17,19 +17,15 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private UserRepository userRepository;
 
-	// @Test
+//	@Test
 	public void create() {
-		// String sql = insert into user (%s, %s, %d) value (account,email,age);
-		String account = "Test01";
-		String password = "Test01";
+		String account = "Test03";
+		String password = "Test03";
 
 		String status = "REGISTERED";
-		String email = "Test01@naver.com";
-		String phoneNumber = "010-1111-1111";
+		String email = "Test03@naver.com";
+		String phoneNumber = "010-1111-3333";
 		LocalDateTime registedAt = LocalDateTime.now();
-		LocalDateTime createdAt = LocalDateTime.now();
-
-		String createdBy = "AdminServer";
 
 		User user = new User();
 
@@ -38,9 +34,9 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 		user.setStatus(status);
 		user.setEmail(email);
 		user.setPhoneNumber(phoneNumber);
-		user.setCreatedAt(createdAt);
-		user.setCreatedBy(createdBy);
 		user.setRegisteredAt(registedAt);
+
+		User u = User.builder().account(account).password(password).status(status).email(email).build();
 
 		User newUser = userRepository.save(user);
 		Assert.assertNotNull(newUser);
@@ -51,17 +47,28 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 	@Transactional
 	public void read() {
 
-		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-1111");
+		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+
 		if (user != null) {
 			user.getOrderGroupList().stream().forEach(orderGroup -> {
+				System.out.println("==========주문묶음=========");
 				System.out.println("수령인 : " + orderGroup.getRevName());
 				System.out.println("총금액 : " + orderGroup.getTotalPrice());
 				System.out.println("수령지 : " + orderGroup.getRevAddress());
 				System.out.println("총수량 : " + orderGroup.getTotalQuantity());
-			});
-		//	Assert.assertNotNull(user);
+				System.out.println("==========주문상세=========");
+				orderGroup.getOrderDetailList().forEach(orderDetail -> {
+					System.out.println("주문 상품 : " + orderDetail.getItem().getName());
+					System.out.println("고객센터 번호 : " + orderDetail.getItem().getPartner().getCallCenter());
+					System.out.println("주문의 상태 : " + orderDetail.getStatus());
+					System.out.println("도착예정일자 : " + orderDetail.getArrivalDate());
 
+				});
+			});
 		}
+
+		Assert.assertNotNull(user);
+
 	}
 
 	// @Test
@@ -71,15 +78,15 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 		user.ifPresent(selectUser -> {
 			// selectUser.setId(3L);
 			selectUser.setAccount("pppp");
-			selectUser.setUpdateBy("update method()");
-			selectUser.setUpdateAt(LocalDateTime.now());
+			selectUser.setUpdatedBy("update method()");
+			selectUser.setUpdatedAt(LocalDateTime.now());
 			userRepository.save(selectUser);
 		});
 	}
 
 //	@DeleteMapping("/api/usr")
 	// @Test
-//	@Transactional
+//	@Transactiona
 	public void delete() {
 		Optional<User> user = userRepository.findById(5L);
 		Assert.assertTrue(user.isPresent());
@@ -89,12 +96,7 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 		});
 		Optional<User> deleteUser = userRepository.findById(5L);
 		Assert.assertFalse(deleteUser.isPresent());
-		/*
-		 * if (deleteUser.isPresent()) { System.out.println("데이터 존재 : " +
-		 * deleteUser.get()); } else { System.out.println("데이터 삭제 데이터없음");
-		 * 
-		 * }
-		 */
+
 	}
 
 }

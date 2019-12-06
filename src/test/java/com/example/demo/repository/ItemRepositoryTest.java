@@ -19,7 +19,7 @@ public class ItemRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private ItemRepository itemRepository;
 
-//	@Test
+	//@Test
 	public void create() {
 		Item item = new Item();
 
@@ -30,9 +30,7 @@ public class ItemRepositoryTest extends BootjarTestApplicationTests {
 		item.setName("삼성 노트북");
 		item.setBrandName("samsung");
 		item.setRegisteredAt(LocalDateTime.now());
-		item.setCreatedAt(LocalDateTime.now());
-		item.setCreatedBy("Partner01");
-		item.setPartnerId(1L);
+		//item.setPartnerId(1L);
 		Item newItem = itemRepository.save(item);
 		Assert.assertNotNull(newItem);
 	}

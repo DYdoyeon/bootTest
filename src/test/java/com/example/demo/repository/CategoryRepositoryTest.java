@@ -1,6 +1,5 @@
 package com.example.demo.repository;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.junit.Assert;
@@ -14,18 +13,14 @@ public class CategoryRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-	// @Test
+//	 @Test
 	public void create() {
 		String type = "COMPUTER";
 		String title = "컴퓨터";
-		LocalDateTime createdAt = LocalDateTime.now();
-		String createdBy = "AdminServer";
 
 		Category category = new Category();
 		category.setType(type);
 		category.setTitle(title);
-		category.setCreatedAt(createdAt);
-		category.setCreatedBy(createdBy);
 
 		Category newCategory = categoryRepository.save(category);
 		Assert.assertNotNull(newCategory);

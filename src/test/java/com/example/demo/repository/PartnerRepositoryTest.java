@@ -18,17 +18,16 @@ public class PartnerRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private PartnerRepository partnerRepository;
 
-//	@Test
+	//@Test
 	public void create() {
 		String name = "Partner01";
 		String status = "REGISTERED";
 		String address = "서울시 강남구";
-		String callCenter = "010-1111-1111";
-		String partnerNumber = "010-1111-1111";
+		String callCenter = "070-1111-1111";
+		String partnerNumber = "010-1111-2222";
+		String businessNumber = "010-1111-2222";
 		String ceoName = "홍길동";
 		LocalDateTime registedAt = LocalDateTime.now();
-		LocalDateTime createdAt = LocalDateTime.now();
-		String createdBy = "AdminServer";
 		Long categoryId = 1L;
 		Partner partner = new Partner();
 		partner.setName(name);
@@ -37,11 +36,9 @@ public class PartnerRepositoryTest extends BootjarTestApplicationTests {
 		partner.setCallCenter(callCenter);
 		partner.setCeoName(ceoName);
 		partner.setPartnerNumber(partnerNumber);
+		partner.setBusinessNumber(businessNumber);
 		partner.setRegisteredAt(registedAt);
-		partner.setCreatedAt(createdAt);
-		partner.setCreatedBy(createdBy);
-		partner.setCategoryId(categoryId);
-		
+
 		Partner newPartner = partnerRepository.save(partner);
 		Assert.assertNotNull(newPartner);
 		Assert.assertEquals(newPartner.getName(), name);

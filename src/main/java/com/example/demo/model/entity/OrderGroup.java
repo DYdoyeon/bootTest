@@ -5,12 +5,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +29,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity // order_detail
-@ToString(exclude = {"user"})
+@EntityListeners(AuditingEntityListener.class)
+@ToString(exclude = { "user", "orderDetailList" })
 public class OrderGroup {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,16 +46,26 @@ public class OrderGroup {
 	private LocalDateTime arrivalDate;
 	private LocalDateTime orderAt;
 
-	private LocalDateTime createdAt;
-	private String createdBy;
-	private LocalDateTime updatedAt;
-	private String updatedBy;
-	//private Long userId;
 	
+
+	@CreatedDate
+	private LocalDateTime createdAt;
+	
+	@CreatedBy
+	private String createdBy;
+	
+	@LastModifiedDate
+	private LocalDateTime updatedAt;
+	
+	@LastModifiedBy
+	private String updatedBy;
+//	private Long userId;
 	// OrderGroup N : 1 User
 	@ManyToOne
 	private User user;
 
-	//@OneToMany(fetch = FetchType.LAZY, mappedBy = "orderDetailList")
-//	private List<OrderDetail> orderDetailList;
+	//OrderGroup 1 : N OrderDetail
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "orderGroup")
+	private List<OrderDetail> orderDetailList;
+
 }

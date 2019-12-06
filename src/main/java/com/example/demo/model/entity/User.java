@@ -3,56 +3,59 @@ package com.example.demo.model.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import lombok.*;
+import lombok.experimental.Accessors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "USER")
-@ToString(exclude = { "orderGroup" })
+@ToString(exclude = { "orderGroupList" })
+@EntityListeners(AuditingEntityListener.class)
+@Accessors(chain = true)
+@Builder
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String account;
-	private String status;
 	private String password;
+
+	private String status;
 	private LocalDateTime registeredAt;
 
 	private LocalDateTime unregisteredAt;
 
-	@Column(name = "phone_number")
 	private String phoneNumber;
-
-	@Column(name = "created_at")
-	private LocalDateTime createdAt;
 
 	private String email;
 
-	@Column(name = "created_by")
+	@CreatedDate
+	private LocalDateTime createdAt;
+
+	@CreatedBy
 	private String createdBy;
 
-	@Column(name = "updated_at")
-	private LocalDateTime updateAt;
+	@LastModifiedDate
+	private LocalDateTime updatedAt;
 
-	@Column(name = "updated_by")
-	private String updateBy;
-
-	
-	//User 1 : N OrderGroup
+	@LastModifiedBy
+	private String updatedBy;
+	// User 1 : N OrderGroup
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<OrderGroup> orderGroupList;
 

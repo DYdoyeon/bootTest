@@ -1,4 +1,4 @@
-
+/*
 pluginManagement {
 	repositories {
 		maven { url 'https://repo.spring.io/milestone' }
@@ -12,5 +12,13 @@ pluginManagement {
 			}
 		}
 	}
+}
+rootProject.name = 'bootjarTest'
+*/
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
 }
 rootProject.name = 'bootjarTest'
