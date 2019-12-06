@@ -33,7 +33,7 @@ public class OrderDetailRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private OrderDetailRepository orderDetailRepository;
 
-	//@Test
+	@Test
 	public void create() {
 		OrderDetail orderDetail = new OrderDetail();
 

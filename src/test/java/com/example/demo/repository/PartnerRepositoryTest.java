@@ -1,24 +1,19 @@
 package com.example.demo.repository;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.*;
 import com.example.demo.model.entity.Partner;
-import com.example.demo.model.entity.User;
 
 public class PartnerRepositoryTest extends BootjarTestApplicationTests {
 
 	@Autowired
 	private PartnerRepository partnerRepository;
 
-	//@Test
+	@Test
 	public void create() {
 		String name = "Partner01";
 		String status = "REGISTERED";
@@ -28,7 +23,7 @@ public class PartnerRepositoryTest extends BootjarTestApplicationTests {
 		String businessNumber = "010-1111-2222";
 		String ceoName = "홍길동";
 		LocalDateTime registedAt = LocalDateTime.now();
-		Long categoryId = 1L;
+		//Long categoryId = 1L;
 		Partner partner = new Partner();
 		partner.setName(name);
 		partner.setStatus(status);

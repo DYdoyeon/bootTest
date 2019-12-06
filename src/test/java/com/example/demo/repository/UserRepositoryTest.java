@@ -17,14 +17,14 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private UserRepository userRepository;
 
-//	@Test
+	@Test
 	public void create() {
-		String account = "Test03";
-		String password = "Test03";
+		String account = "Test04";
+		String password = "Test04";
 
 		String status = "REGISTERED";
-		String email = "Test03@naver.com";
-		String phoneNumber = "010-1111-3333";
+		String email = "Test04@naver.com";
+		String phoneNumber = "010-1111-4444";
 		LocalDateTime registedAt = LocalDateTime.now();
 
 		User user = new User();
@@ -43,8 +43,8 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 		System.out.println("newUser : " + newUser);
 	}
 
-	@Test
-	@Transactional
+//	@Test
+//	@Transactional
 	public void read() {
 
 		User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
@@ -58,6 +58,8 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 				System.out.println("총수량 : " + orderGroup.getTotalQuantity());
 				System.out.println("==========주문상세=========");
 				orderGroup.getOrderDetailList().forEach(orderDetail -> {
+					System.out.println("파트너사 이름 : " + orderDetail.getItem().getPartner().getName());
+					System.out.println("파트너사 카테코리 : " + orderDetail.getItem().getPartner().getCategory().getTitle());
 					System.out.println("주문 상품 : " + orderDetail.getItem().getName());
 					System.out.println("고객센터 번호 : " + orderDetail.getItem().getPartner().getCallCenter());
 					System.out.println("주문의 상태 : " + orderDetail.getStatus());

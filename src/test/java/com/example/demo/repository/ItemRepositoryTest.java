@@ -19,7 +19,7 @@ public class ItemRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private ItemRepository itemRepository;
 
-	//@Test
+	@Test
 	public void create() {
 		Item item = new Item();
 

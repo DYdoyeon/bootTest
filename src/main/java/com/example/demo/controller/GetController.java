@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 //import org.slf4j.Logger;
 
 import com.example.demo.model.SearchParam;
+import com.example.demo.model.network.Header;
 
 @RestController
 @RequestMapping("/api")
@@ -26,5 +27,13 @@ public class GetController {
 	@GetMapping("/getMultiParameter")
 	public SearchParam getMultiParameter(SearchParam searchParam) {
 		return searchParam;
+	}
+
+	@GetMapping("/header")
+	public Header getHeader() {
+		
+		//{"resultCode" :"OK" , "descripton" : "OK"}
+		return Header.builder().resultCode("OK").description("OK").build();
+
 	}
 }

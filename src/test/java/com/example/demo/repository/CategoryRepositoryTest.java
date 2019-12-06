@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.demo.BootjarTestApplicationTests;
@@ -13,7 +14,7 @@ public class CategoryRepositoryTest extends BootjarTestApplicationTests {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
-//	 @Test
+	 @Test
 	public void create() {
 		String type = "COMPUTER";
 		String title = "컴퓨터";
