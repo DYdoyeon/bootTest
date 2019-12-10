@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.controller.ifs.CrudInterface;
 import com.example.demo.model.entity.User;
+import com.example.demo.model.enumclass.UserStatus;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.UserApiRequest;
 import com.example.demo.model.network.response.UserApiResponse;
 import com.example.demo.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse> {
 	@Autowired
 	private UserRepository userRepository;
@@ -25,10 +29,14 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 	public Header<UserApiResponse> create(Header<UserApiRequest> request) {
 		// 1. Request Data
 		UserApiRequest userApiRequest = request.getData();
-
+		
 		// 2. user 생성
-		User user = User.builder().account(userApiRequest.getAccount()).password(userApiRequest.getPassword())
-				.status("REGISTERED").phoneNumber(userApiRequest.getPhoneNumber()).email(userApiRequest.getEmail())
+		User user = User.builder()
+				.account(userApiRequest.getAccount())
+				.password(userApiRequest.getPassword())
+				.status(UserStatus.REGISTERED)
+				.phoneNumber(userApiRequest.getPhoneNumber())
+				.email(userApiRequest.getEmail())
 				.registeredAt(LocalDateTime.now()).build();
 
 		User newUser = userRepository.save(user);
@@ -40,6 +48,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
 	@Override
 	public Header<UserApiResponse> read(Long id) {
+		log.info("hedaer : "+userRepository.findById(id));
 		// id -> repository getOne, getById
 		// Optional<User> optional = userRepository.findById(id);
 
@@ -61,9 +70,12 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 		Optional<User> optional = userRepository.findById(userApiRequest.getId());
 		return optional.map(user -> {
 			// 3. data ->update
-			user.setAccount(userApiRequest.getAccount()).setPassword(userApiRequest.getPassword())
-					.setStatus(userApiRequest.getStatus()).setPhoneNumber(userApiRequest.getPhoneNumber())
-					.setEmail(userApiRequest.getEmail()).setRegisteredAt(userApiRequest.getRegisteredAt())
+			user.setAccount(userApiRequest.getAccount())
+			.setPassword(userApiRequest.getPassword())
+					.setStatus(userApiRequest.getStatus())
+					.setPhoneNumber(userApiRequest.getPhoneNumber())
+					.setEmail(userApiRequest.getEmail())
+					.setRegisteredAt(userApiRequest.getRegisteredAt())
 					.setUnregisteredAt(userApiRequest.getUnregisteredAt());
 			return user;
 		}).map(user -> userRepository.save(user)) // update ->newUser
@@ -90,9 +102,15 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 	private Header<UserApiResponse> response(User user) {
 		// user -> userApiResponse
 
-		UserApiResponse userApiResponse = UserApiResponse.builder().id(user.getId()).account(user.getAccount())
-				.password(user.getPassword()).email(user.getEmail()).phoneNumber(user.getPhoneNumber())
-				.status(user.getStatus()).registeredAt(user.getRegisteredAt()).registeredAt(user.getUnregisteredAt())
+		UserApiResponse userApiResponse = UserApiResponse.builder()
+				.id(user.getId())
+				.account(user.getAccount())
+				.password(user.getPassword())
+				.email(user.getEmail())
+				.phoneNumber(user.getPhoneNumber())
+				.status(user.getStatus())
+				.registeredAt(user.getRegisteredAt())
+				.registeredAt(user.getUnregisteredAt())
 				.build();
 
 		// Header + data return

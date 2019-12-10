@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -24,17 +25,17 @@ public class ItemRepositoryTest extends BootjarTestApplicationTests {
 		Item item = new Item();
 
 		item.setName("UNREGISTERED");
-		item.setPrice(9000000);
+		item.setPrice(BigDecimal.valueOf(900000));
 		item.setTitle("삼성노트북 A100");
 		item.setContent("2019년형 노트입니다.");
 		item.setName("삼성 노트북");
 		item.setBrandName("samsung");
 		item.setRegisteredAt(LocalDateTime.now());
-		//item.setPartnerId(1L);
+		// item.setPartnerId(1L);
 		Item newItem = itemRepository.save(item);
 		Assert.assertNotNull(newItem);
 	}
- 
+
 	// @Test
 	public void read() {
 		Long id = 1L;

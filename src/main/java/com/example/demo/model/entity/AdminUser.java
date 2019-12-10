@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,14 +16,20 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.example.demo.model.enumclass.UserStatus;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
+@Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
 public class AdminUser {
 
@@ -32,7 +40,9 @@ public class AdminUser {
 	private String account;
 
 	private String password;
-	private String status;
+	
+	@Enumerated(EnumType.STRING)
+	private UserStatus status; //  REGISTERED / UNREGISTERED / WATING
 
 	private String role;
 	private int loginFailCount;

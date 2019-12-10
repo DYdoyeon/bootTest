@@ -31,12 +31,12 @@ public class UserRepositoryTest extends BootjarTestApplicationTests {
 
 		user.setAccount(account);
 		user.setPassword(password);
-		user.setStatus(status);
+	//.	user.setStatus(status);
 		user.setEmail(email);
 		user.setPhoneNumber(phoneNumber);
 		user.setRegisteredAt(registedAt);
 
-		User u = User.builder().account(account).password(password).status(status).email(email).build();
+		User u = User.builder().account(account).password(password).email(email).build();
 
 		User newUser = userRepository.save(user);
 		Assert.assertNotNull(newUser);

@@ -18,7 +18,7 @@ public class AdminUserRepositoryTest extends BootjarTestApplicationTests {
 		AdminUser adminUser = new AdminUser();
 		adminUser.setAccount("AdminUser01");
 		adminUser.setPassword("AdminUser01");
-		adminUser.setStatus("REGISTERED");
+		//adminUser.setStatus("REGISTERED");
 		adminUser.setRole("PARTNER");
 
 		// adminUser.setCreatedAt(LocalDateTime.now());

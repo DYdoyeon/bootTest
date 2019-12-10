@@ -26,7 +26,7 @@ public class PartnerRepositoryTest extends BootjarTestApplicationTests {
 		//Long categoryId = 1L;
 		Partner partner = new Partner();
 		partner.setName(name);
-		partner.setStatus(status);
+	//	partner.setStatus(status);
 		partner.setAddress(address);
 		partner.setCallCenter(callCenter);
 		partner.setCeoName(ceoName);

@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,10 +18,14 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.example.demo.model.enumclass.UserStatus;
+
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.Accessors;
 
 @Data
 @AllArgsConstructor
@@ -27,17 +33,18 @@ import lombok.ToString;
 @Entity // order_detail
 @ToString(exclude = { "orderGroup", "item" })
 @EntityListeners(AuditingEntityListener.class)
+@Builder
+@Accessors(chain = true)
 public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	// private LocalDateTime arrivedDate;
+	
 	private int quantity;
 	private BigDecimal totalPrice;
-//	private Long orderGroupId;
-	// OrderDetail N : 1 Item
 
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private UserStatus status;
 
 	@CreatedDate
 	private LocalDateTime createdAt;
