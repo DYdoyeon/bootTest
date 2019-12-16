@@ -4,6 +4,7 @@ import com.example.demo.model.network.response.*;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.PartnerRepository;
 import com.example.demo.model.entity.Partner;
+import com.example.demo.model.enumclass.PartnerStatus;
 import com.example.demo.model.enumclass.UserStatus;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.*;
@@ -14,10 +15,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.controller.ifs.CrudInterface;
 
 @Service
-public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, PartnerApiResponse> {
-	@Autowired
-	private PartnerRepository partnerRepository;
-
+public class PartnerApiLogicService extends BaseService<PartnerApiRequest, PartnerApiResponse,Partner> implements CrudInterface<PartnerApiRequest, PartnerApiResponse> {
+	
 	@Autowired
 	private CategoryRepository categoryRepository;
 
@@ -29,7 +28,7 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 		//2. data -> repository
 		Partner partner = Partner.builder()
 				.name(body.getName())
-				.status(UserStatus.REGISTERED)
+				.status(PartnerStatus.REGISTERED)
 				.address(body.getAddress())
 				.callCenter(body.getCallCenter())
 				.partnerNumber(body.getPartnerNumber())
@@ -39,14 +38,14 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 				.unregisteredAt(body.getUnregisteredAt())
 				.category(categoryRepository.getOne(body.getCategoryId()))
 				.build();
-		Partner newPartner = partnerRepository.save(partner);
+		Partner newPartner = baseRepository.save(partner);
 		
 		return response(newPartner);
 	}
 
 	@Override
 	public Header<PartnerApiResponse> read(Long id) {
-		return partnerRepository.findById(id)
+		return baseRepository.findById(id)
 				.map(this::response)
 				.orElseGet(()->Header.Error("No Data"));
 		
@@ -58,7 +57,7 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 		PartnerApiRequest body = request.getData();
 		
 		//2. update
-		return partnerRepository.findById(body.getId())
+		return baseRepository.findById(body.getId())
 				.map(partner->{
 					partner
 					.setStatus(body.getStatus())
@@ -75,16 +74,16 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 					
 					return partner;
 				})
-				.map(changePartner ->partnerRepository.save(changePartner))
+				.map(changePartner ->baseRepository.save(changePartner))
 				.map(this::response)
 				.orElseGet(()->Header.Error("No Data"));
 	}
 
 	@Override
 	public Header delete(Long id) {
-		return partnerRepository.findById(id)
+		return baseRepository.findById(id)
 		.map(partner ->{
-			partnerRepository.delete(partner);
+			baseRepository.delete(partner);
 			return Header.OK("");
 		})
 		.orElseGet(()->Header.Error("No Data"));

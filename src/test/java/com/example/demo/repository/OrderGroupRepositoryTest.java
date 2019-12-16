@@ -25,7 +25,7 @@ public class OrderGroupRepositoryTest extends BootjarTestApplicationTests {
 		
 		OrderGroup orderGroup = new OrderGroup();
 	//	orderGroup.setStatus("COMPLETED");
-		orderGroup.setOrderType("CARD");
+	//	orderGroup.setOrderType("CARD");
 		orderGroup.setRevAddress("서울시 서초구");
 		orderGroup.setRevName("김이사");
 		orderGroup.setPaymentType("CARD");

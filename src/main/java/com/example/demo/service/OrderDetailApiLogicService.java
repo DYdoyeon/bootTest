@@ -8,6 +8,7 @@ import com.example.demo.repository.OrderGroupRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import com.example.demo.model.entity.OrderDetail;
+import com.example.demo.model.enumclass.OrderDetailStatus;
 import com.example.demo.model.enumclass.UserStatus;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.*;
@@ -15,15 +16,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.demo.controller.ifs.CrudInterface;
 
 @Slf4j
 @Service
-public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiRequest, OrderDetailApiResponse> {
-	@Autowired
-	private OrderDetailRepository orderDetailRepository;
-
+public class OrderDetailApiLogicService extends BaseService<OrderDetailApiRequest, OrderDetailApiResponse,OrderDetail> implements CrudInterface<OrderDetailApiRequest, OrderDetailApiResponse> {
+	
 	@Autowired
 	private OrderGroupRepository orderGroupRepository;
 
@@ -37,7 +37,7 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 
 		// 2. OrderDetail 생
 		OrderDetail orderDetail = OrderDetail.builder()
-				.status(UserStatus.REGISTERED)
+				.status(OrderDetailStatus.WAITING)
 				.arrivalDate(orderDetailApiRequest.getArrivalDate())
 				.quantity(orderDetailApiRequest.getQuantity())
 				.totalPrice(orderDetailApiRequest.getTotalPrice())
@@ -45,17 +45,17 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 				.item(itemRepository.getOne(orderDetailApiRequest.getItemId())).build();
 
 		// 3. 생성된 데이터 -> OrderDetailResponse Return
-		OrderDetail newOrderDetail = orderDetailRepository.save(orderDetail);
+		OrderDetail newOrderDetail = baseRepository.save(orderDetail);
 		return response(newOrderDetail);
 	}
 
 	@Override
-	public Header<OrderDetailApiResponse> read(Long id) {
-		Optional<OrderDetail> optional = orderDetailRepository.findById(1L);
-		//problem : when id = 1, optional is empty......why/.........TT
-	
+	public Header<OrderDetailApiResponse> read( Long id) {
+		Optional<OrderDetail> optional = baseRepository.findById(id);
+
+		log.info("hedaer : "+baseRepository.findById(id));
 		
-		return optional.map(orderDetail -> response(orderDetail)).orElseGet(() -> Header.Error("No data"));
+		return  baseRepository.findById(id).map(orderDetail -> response(orderDetail)).orElseGet(() -> Header.Error("No data"));
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 		// Optional<OrderDetail> optional =
 		// orderDetailRepository.findById(orderDetailApiRequest.getId());
 		// log.info(null, optional.get());
-		return orderDetailRepository.findById(orderDetailApiRequest.getId()).map(orderDetail -> {
+		return baseRepository.findById(orderDetailApiRequest.getId()).map(orderDetail -> {
 			orderDetail.setStatus(orderDetailApiRequest.getStatus())
 					.setArrivalDate(orderDetailApiRequest.getArrivalDate())
 					.setQuantity(orderDetailApiRequest.getQuantity())
@@ -80,17 +80,17 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 			log.info(" : " + orderDetailApiRequest.getStatus());
 			return orderDetail;
 
-		}).map(newOrderDetail -> orderDetailRepository.save(newOrderDetail)).map(this::response)
+		}).map(newOrderDetail -> baseRepository.save(newOrderDetail)).map(this::response)
 				.orElseGet(() -> Header.Error("No data"));
 
 	}
 
 	@Override
 	public Header delete(Long id) {
-		Optional<OrderDetail> optional = orderDetailRepository.findById(id);
+		Optional<OrderDetail> optional = baseRepository.findById(id);
 
 		return optional.map(orderDetail -> {
-			orderDetailRepository.delete(orderDetail);
+			baseRepository.delete(orderDetail);
 			return Header.OK();
 
 		}).orElseGet(() -> Header.Error("No Data"));
@@ -106,8 +106,6 @@ public class OrderDetailApiLogicService implements CrudInterface<OrderDetailApiR
 				.totalPrice(orderDetail.getTotalPrice())
 				.orderGroupId(orderDetail.getOrderGroup().getId())
 				.itemId(orderDetail.getItem().getId()).build();
-		log.info("orderDetail.id :" + orderDetail.getId());
-		log.info("body.status :" + body.getStatus());
 		return Header.OK(body);
 	}
 }

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.controller.CrudController;
 import com.example.demo.controller.ifs.CrudInterface;
+import com.example.demo.model.entity.User;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.UserApiRequest;
 import com.example.demo.model.network.response.UserApiResponse;
@@ -20,40 +22,8 @@ import com.example.demo.service.UserApiLogicService;
 @Slf4j
 @RestController
 @RequestMapping("api/user")
-public class UserApiController implements CrudInterface<UserApiRequest, UserApiResponse> {
+public class UserApiController extends  CrudController<UserApiRequest, UserApiResponse,User> {
 
-	@Autowired
-	private UserApiLogicService userApiLogicService;
-
-	@Override
-	@PostMapping("")
-	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> request) {
-		log.info("{}", request);
-		// TODO Auto-generated method stub
-		return userApiLogicService.create(request);
-	}
-
-	@Override
-	@GetMapping("{id}") // api/user/{id}
-	public Header<UserApiResponse> read(@PathVariable(name = "id") Long id) {
-		log.info("read id : : {}", id);
-		return userApiLogicService.read(id);
-	}
-	// public Header update() {
-
-	@PutMapping("")
-	@Override
-	public Header<UserApiResponse> update(@RequestBody Header<UserApiRequest> request) {
-		log.info("update : {}", request);
-		return userApiLogicService.update(request);
-	}
-
-	@Override
-	@DeleteMapping("{id}")
-	public Header delete(@PathVariable(name = "id") Long id) {
-		log.info("delete id : {}", id);
-		return userApiLogicService.delete(id);
-	}
 
 	// }
 }

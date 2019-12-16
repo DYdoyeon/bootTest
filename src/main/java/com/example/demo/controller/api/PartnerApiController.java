@@ -13,44 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.network.response.*;
 import com.example.demo.service.PartnerApiLogicService;
+import com.example.demo.model.entity.Partner;
 import com.example.demo.model.network.Header;
 import com.example.demo.model.network.request.*;
+import com.example.demo.controller.CrudController;
 import com.example.demo.controller.ifs.CrudInterface;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("api/partner")
-public class PartnerApiController implements CrudInterface<PartnerApiRequest, PartnerApiResponse> {
+public class PartnerApiController extends CrudController<PartnerApiRequest, PartnerApiResponse,Partner> {
 
-	@Autowired
-	private PartnerApiLogicService partnerApiLogicService;
-
-	@Override
-	@PostMapping("")
-	public Header<PartnerApiResponse> create(@RequestBody Header<PartnerApiRequest> request) {
-
-		return partnerApiLogicService.create(request);
-	}
-
-	@Override
-	@GetMapping("{id}")
-	public Header<PartnerApiResponse> read(@PathVariable(name = "id") Long id) {
-
-		return partnerApiLogicService.read(id);
-	}
-
-	@Override
-	@PutMapping("")
-	public Header<PartnerApiResponse> update(@RequestBody Header<PartnerApiRequest> request) {
-
-		return partnerApiLogicService.update(request);
-	}
-
-	@Override
-	@DeleteMapping("{id}")
-	public Header delete(@PathVariable Long id) {
-		return partnerApiLogicService.delete(id);
-	}
 
 }

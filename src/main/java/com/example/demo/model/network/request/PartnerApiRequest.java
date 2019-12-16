@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import com.example.demo.model.enumclass.PartnerStatus;
 import com.example.demo.model.enumclass.UserStatus;
 
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class PartnerApiRequest {
 	private String name;
 
 	@Enumerated(EnumType.STRING)
-	private UserStatus status;
+	private PartnerStatus status;
 	
 	private String address;
 	

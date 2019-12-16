@@ -21,10 +21,10 @@ import lombok.NoArgsConstructor;
 public class OrderGroupApiResponse {
 	private Long id;
 
-	@Enumerated(EnumType.STRING)
-	private OrderType status;
+	private String status;
 
-	private String orderType;
+	@Enumerated(EnumType.STRING)
+	private OrderType orderType;
 
 	private String revAddress;
 

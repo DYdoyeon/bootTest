@@ -20,6 +20,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.example.demo.model.enumclass.PartnerStatus;
 import com.example.demo.model.enumclass.UserStatus;
 
 import lombok.AllArgsConstructor;
@@ -49,7 +50,7 @@ public class Partner {
 	private String businessNumber;
 
 	@Enumerated(EnumType.STRING)
-	private UserStatus status;
+	private PartnerStatus status;
 	private String ceoName;
 
 	@CreatedDate

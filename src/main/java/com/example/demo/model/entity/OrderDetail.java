@@ -18,6 +18,7 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.example.demo.model.enumclass.OrderDetailStatus;
 import com.example.demo.model.enumclass.UserStatus;
 
 import lombok.AllArgsConstructor;
@@ -39,12 +40,12 @@ public class OrderDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private int quantity;
 	private BigDecimal totalPrice;
 
 	@Enumerated(EnumType.STRING)
-	private UserStatus status;
+	private OrderDetailStatus status;
 
 	@CreatedDate
 	private LocalDateTime createdAt;

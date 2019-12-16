@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
+import com.example.demo.model.enumclass.OrderDetailStatus;
 import com.example.demo.model.enumclass.UserStatus;
 
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class OrderDetailApiResponse {
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
-	private UserStatus status;
+	private OrderDetailStatus status;
 	
 	private Integer quantity;
 	
